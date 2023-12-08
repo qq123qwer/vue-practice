@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    input {
+      padding: 2px 10px;
+      margin: 20px 0;
+      outline: none;
+    }
+
+    .parent {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid red;
+    }
+
+    .child {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid green;
+    }
+    .grandson{
+      padding: 10px;
+      width: 200px;
+      height: 200px;
+      border: 10px solid green;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>实例root</h1>
+    <parent>
+      <template v-slot="one">
+        <button>自定义插槽按钮{{message}}(当面Message是root里面的)</button>
+      </template>
+      <template #two>
+        <p>slot=two</p>
+      </template>
+      <template #three="props">
+        {{props}}
+      </template>
+    </parent>
+  </div>
+  <template id="parent">
+    <div :class="{parent:true}">
+      <h1>parent</h1>
+      <!-- 定义插槽 -->
+      <slot name="one"></slot>
+      <slot name="two"></slot>
+      <slot :parentMessage="parentMessage" name="three">
+        {{parentMessage}}
+      </slot>
+      <child></child>
+    </div>
+  </template>
+  <template id="child">
+    <div :class="{child:true}">
+      <h1>child</h1>
+    </div>
+  </template>
+  <script>
+    const child = {
+      template:"#child",
+    }
+    const parent = {
+      template: '#parent',
+      data(){
+        return {
+          parentMessage:'parent'
+        }
+      },
+      components:{
+        child
+      }
+    }
+    const vm = new Vue({
+      el:"#app",
+      data(){
+        return {
+          message:'root'
+        }
+      },
+      components:{
+        parent,
+      }
+    })
+  </script>
+</body>
+</html>

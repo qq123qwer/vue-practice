@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <style>
+    /* 隐藏编译未完成时显示原内容 */
+    /* 使用v-text可以避免编译未完成时显示原内容 */
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 插值绑定 -->
+    <h1 v-cloak>{{ message }}</h1>
+    <p :hidden="ishidden" :class="">{{ showMessage() }}</p>
+    <!-- <p :[attr]="">{{message}}</p> -->
+    <p>{{ list[0] === 0 ? 1 : 0 }}</p>
+    <div>
+      {{ list }}
+    </div>
+    <div>
+      {{ obj }}
+    </div>
+    <div v-for="item in list">
+      {{item}}
+    </div>
+    <!-- v-once只接受一次数据渲染 -->
+    <!-- <span v-once="message">{{message}}</span> -->
+    <!-- 只有Vue初始化完成之后 v-text才生效 -->
+    <!-- <span v-text="message"></span> -->
+  </div>
+  <script>
+    /**
+     * Vue
+    */
+    const app = new Vue({
+      el: '#app', // 绑定view层容器
+      data: { // 数据
+        message: 'Hello Vue',
+        list: [
+          0,
+          2,
+          3,
+          4,
+          5,
+        ],
+        obj: {
+          name: 'hhh',
+          age: '11'
+        },
+        ishidden: true,
+        attr: '',
+      },
+      // data() {
+      //   return {
+      //     message: 'Hello Vue',
+      //     list: [
+      //       0,
+      //       2,
+      //       3,
+      //       4,
+      //       5,
+      //     ],
+      //     obj :{
+      //       name:'hhh',
+      //       age:'11'
+      //     },
+      //     ishidden:false,
+      //   }
+      // },
+      methods: { // 方法
+        showMessage() {
+          return this.message
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    input {
+      padding: 2px 10px;
+      margin: 20px 0;
+      outline: none;
+    }
+
+    .parent {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid red;
+    }
+
+    .child {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid green;
+    }
+    .grandson{
+      padding: 10px;
+      width: 200px;
+      height: 200px;
+      border: 10px solid green;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="message.content">
+    <p>来自parent的信息:{{parentMsg}}</p>
+    <p>来自child的信息:{{childMsg}}</p>
+    <parent></parent>
+  </div>
+  <template id="parent">
+    <div :class="{parent:true}">
+      <h1>parent</h1>
+      <input type="text" @input="changeRootMsg">
+      <p>来自root的信息:{{rootMsg.content}}</p>
+      <child></child>
+    </div>
+  </template>
+  <template id="child">
+    <div :class="{child:true}">
+      <h1>child</h1>
+      <input type="text" @input="changeRootMsg">
+      <p>来自root的信息:{{rootMsg.content}}</p>
+    </div>
+  </template>
+  <script>
+    const child = {
+      template:"#child",
+      inject:{
+        rootMsg:{
+          from:'messageFromRoot',
+          default(){
+            return {
+              content:'默认值',
+            }
+          }
+        },
+        changeMsg:{
+          from:'changeMsg',
+        }
+      },
+      data(){
+        return {
+          message:''
+        }
+      },
+      methods:{
+        changeRootMsg(e){
+          this.changeMsg(e.target.value , 'child')
+        }
+      }
+    }
+    const parent = {
+      template:"#parent",
+      inject:{
+        rootMsg:{
+          from:'messageFromRoot',
+          default(){
+            return {
+              content:'默认值',
+            }
+          }
+        },
+        changeMsg:{
+          from:'changeMsg',
+        }
+      },
+      data(){
+        return {
+          message:'',
+        }
+      },
+      components:{
+        child,
+      },
+      methods:{
+        changeRootMsg(e) {
+          this.changeMsg(e.target.value, 'parent')
+        }
+      }
+    }
+    const vm = new Vue({
+      el:"#app",
+      provide(){
+        return {
+          messageFromRoot: this.message,
+          changeMsg: this.changeMsg //method
+        }
+      },
+      data() {
+        return {
+          message: { content: "" },
+          parentMsg: '',
+          childMsg: ''
+        }
+      },
+      components:{
+        parent,
+      },
+      methods:{
+        changeMsg(e, n) {
+          this[`${n}Msg`] = e
+        }
+      }
+    })
+  </script>  
+</body>
+</html>

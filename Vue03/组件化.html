@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <!--
+    全局组件 
+    <div id="components-demo">
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+  </div>
+  <script>
+    // 全局组件
+    Vue.component('button-counter', {
+      data: function () {
+        return {
+          count: 0,
+        }
+      },
+      methods:{
+        change(){
+          this.count++
+        }
+      },
+      template: '<button v-on:click="change()">You clicked me {{ count }} times.</button>'
+    })
+    const vm = new Vue({ el: '#components-demo' })
+  </script> -->
+  <!-- 局部组件 -->
+  <!-- 定义一个局部组件 -->
+  <div id="app">
+    <template id="myComponent">
+      <div>局部组件</div>
+      {{name}}
+    </template>
+  </div>
+  <script>
+    var myComponent = {
+      template:'#myComponent',
+      data(){
+        return {
+          name:'gg'
+        }
+      }
+    }
+    const vm = new Vue({
+      el:"#app",
+      components:{
+        myComponent
+      }
+    })
+  </script>
+  
+  </script>
+</body>
+
+</html>

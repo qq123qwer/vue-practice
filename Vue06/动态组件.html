@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    .header {
+      width: 500px;
+      margin: 100px;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    li {
+      width: 100px;
+      height: 50px;
+      border: 1px solid red;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+    }
+
+    .content {
+      width: 500px;
+      height: 200px;
+      background-color: aqua;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    .active {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div :class="{header:true}">
+      <ul>
+        <li v-for="(item,index) in list" @click="changeview(index)" :class="{active:index===idx}">{{item.content}}</li>
+      </ul>
+      <div :class="{content:true}">
+        <!-- 缓存 -->
+        <keep-alive :include="/childA|childB/">
+          <component :is="currentview"></component>
+        </keep-alive>
+
+      </div>
+    </div>
+  </div>
+  <template id="childA">
+    <div>
+      <p>A</p>
+    </div>
+  </template>
+  <template id="childB">
+    <div>
+      <p>B</p>
+    </div>
+  </template>
+  <template id="childC">
+    <div>
+      <p>C</p>
+    </div>
+  </template>
+  <template id="childD">
+    <div>
+      <p>D</p>
+    </div>
+  </template>
+  <template id="childE">
+    <div>
+      <p>E</p>
+    </div>
+  </template>
+  <script>
+    const childA = {
+      template: "#childA",
+      activated() {
+        console.log("A页面被添加");// 被缓存的组件激活时触发
+      },
+      deactivated() {
+        console.log("A页面被移除"); // 被缓存的组件切换到其他组件时触发
+      },
+      mounted() {
+        console.log('A挂载完成')
+      },
+      destroyed() {
+        console.log('A销毁完成')
+      }
+    }
+    const childB = {
+      template: "#childB",
+      activated() {
+        console.log("B页面被添加");// 被缓存的组件激活时触发
+      },
+      deactivated() {
+        console.log("B页面被移除"); // 被切换到其他组件时触发
+      },
+      mounted() {
+        console.log('B挂载完成')
+      },
+      destroyed() {
+        console.log('B销毁完成')
+      }
+    }
+    const childC = {
+      template: "#childC",
+      activated() {
+        console.log("C页面被添加");// 被缓存的组件激活时触发
+      },
+      deactivated() {
+        console.log("C页面被移除"); // 被切换到其他组件时触发
+      },
+      mounted() {
+        console.log('C挂载完成')
+      },
+      destroyed() {
+        console.log('C销毁完成')
+      }
+    }
+    const childD = {
+      template: "#childD",
+      activated() {
+        console.log("D页面被添加");// 被缓存的组件激活时触发
+      },
+      deactivated() {
+        console.log("D页面被移除"); // 被切换到其他组件时触发
+      },
+      mounted() {
+        console.log('D挂载完成')
+      },
+      destroyed() {
+        console.log('D销毁完成')
+      }
+    }
+    const childE = {
+      template: "#childE",
+      activated() {
+        console.log("E页面被添加");// 被缓存的组件激活时触发
+      },
+      deactivated() {
+        console.log("E页面被移除"); // 被切换到其他组件时触发
+      },
+      mounted() {
+        console.log('E挂载完成')
+      },
+      destroyed() {
+        console.log('E销毁完成')
+      }
+    }
+    const vm = new Vue({
+      el: "#app",
+      components: {
+        childA,
+        childB,
+        childC,
+        childD,
+        childE,
+      },
+      data() {
+        return {
+          idx: 0,
+          arr: ['childA', 'childB', 'childC', 'childD', 'childE'], // 组件名称
+          list: [
+            {
+              content: 'A',
+            },
+            {
+              content: 'B',
+            },
+            {
+              content: 'C',
+            },
+            {
+              content: 'D',
+            },
+            {
+              content: 'E',
+            },
+          ]
+        }
+      },
+      computed: {
+        currentview() {
+          return this.arr[this.idx]
+        }
+      },
+      methods: {
+        changeview(index) {
+          this.idx = index
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>

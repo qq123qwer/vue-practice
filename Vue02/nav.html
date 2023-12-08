@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .bgc{
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div :style="boxobject">
+      <div :style="navobject">
+        <ul :style="ulobject">
+          <li v-for="(item , index) in list" :style="liobject" :class="{bgc : index===tabindex}" :id="index" @click="transform(index)">{{item.nav}}</li>
+        </ul>
+      </div>
+      <div :style="contentobject">
+        <!-- 内容 -->
+        {{list[tabindex].content}}
+      </div>
+    </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        tabindex:0,
+        // 样式
+        boxobject:{
+          width:"400px",
+          height:"400px",
+          margin:'100px auto',
+          border:'1px solid green',
+          borderRadius:'5%',
+          color:'#fff',
+          overflow:'hidden',
+        },
+        navobject:{
+          height:'50px',
+          backgroundColor:'red',
+          boxSizing: 'border-box',
+        },
+        ulobject:{
+          listStyle:'none',
+          lineHeight:'50px',
+          display:'flex',
+          flexDirection:'row',
+          justifyContent: 'space-between',
+        },
+        liobject:{
+          cursor: 'pointer',
+          width:'100px',
+          textAlign:'center',
+        },
+        contentobject:{
+          height:'350px',
+          textAlign:'center',
+          color:'#333',
+          lineHeight:"50px",
+        },
+        // 数据
+        list:[
+          {
+            nav:'首页',
+            content:'内容-首页',
+          },
+          {
+            nav:'资源',
+            content:'内容-资源',
+          },
+          {
+            nav:'联系',
+            content:'内容-联系',
+          },
+        ]
+      },
+      methods:{
+        transform(id){
+          this.tabindex = id
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

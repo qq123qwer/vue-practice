@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    @font-face {
+      font-family: 'iconfont';
+      src: url('./font/iconfont.ttf?t=1700738031891') format('truetype');
+    }
+
+    .iconfont {
+      font-family: "iconfont" !important;
+      font-size: 88px;
+      font-style: normal;
+      color:red;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .leftbutton{
+      top:130px;
+      left:0;
+    }
+    .rightbutton{
+      top:130px;
+      right:0;
+    }
+    .bottombutton{
+      position: absolute;
+      bottom:0;
+    }
+    .libutton{
+      width: 30px;
+      height: 30px;
+      color: #fff;
+      background-color: red;
+      line-height: 30px;
+      text-align: center;
+      margin:15px;
+      cursor: pointer;
+    }
+    .active{
+      background-color: blueviolet;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div :style="styleobject">
+      <!-- 图 -->
+      <div>
+        <ul :style="ulobject">
+          <li :style="liobject"><img :src="item.src" v-show="index === tabindex" v-for="(item , index) in imgs" alt="photo"></li>
+        </ul>
+      </div>
+      <!-- 左右按钮 -->
+      <div>
+        <span :style="buttonobject" :class="[{iconfont : true} , {leftbutton : true}]" @click="lefttrans()">&#xeb06;</span>
+        <span :style="buttonobject" :class="[{iconfont : true} , {rightbutton : true}]" @click="righttrans()">&#xeb03;</span>
+      </div>
+      <!-- 上次按钮 -->
+      <div :class="{bottombutton : true}">
+        <ul :style="ulobject">
+          <li v-for="(item , index) in imgs" :style="liobject" :class="[{libutton : true},{active : tabindex === index} ]" @click="bottomtrans(index)">{{index + 1}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        tabindex:0,
+        // 图片地址
+        imgs: [
+          {
+            src: './images/re1.jpg',
+          },
+          {
+            src: './images/re2.jpg',
+          },
+          {
+            src: './images/re3.jpg',
+          },
+          {
+            src: './images/re4.jpg',
+          },
+          {
+            src: './images/re5.jpg',
+          },
+          {
+            src: './images/re6.jpg',
+          },
+          {
+            src: './images/re7.jpg',
+          },
+          {
+            src: './images/re8.jpg',
+          },
+          {
+            src: './images/re9.jpg',
+          },
+        ],
+        // 样式
+        styleobject: {
+          position:'relative',
+          width: '580px',
+          height: '327px',
+          margin: '100px auto',
+          border: '1px solid green',
+          borderRadius: '5%',
+          overflow: 'hidden'
+        },
+        ulobject: {
+          listStyle: 'none',
+        },
+        liobject: {
+          float: 'left'
+        },
+        buttonobject: {
+          position:'absolute',
+          cursor: 'pointer',
+        },
+      },
+      methods: {
+        lefttrans(){
+          this.tabindex = this.tabindex - 1
+          if(this.tabindex === -1){
+            this.tabindex = this.imgs.length - 1
+          }
+          return 
+        },
+        righttrans(){
+          this.tabindex = this.tabindex + 1
+          if(this.tabindex === this.imgs.length ){
+            this.tabindex = 0
+          }
+          return
+        },
+        bottomtrans(index){
+          this.tabindex = index
+          return 
+        }
+      },
+      computed: {
+
+      },
+    })
+  </script>
+</body>
+
+</html>

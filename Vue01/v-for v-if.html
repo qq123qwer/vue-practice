@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 顺序不能更换 -->
+    <p>{{message}}</p>
+    <p v-if="isOk">11111</p>
+    <p v-else>2222</p>
+    <p v-for="(item , index) in list">{{item}}+{{index}}</p>
+    <!-- index,获取键名之后得到 -->
+    <p v-for="(value , key,index) in obj">{{index}} +{{key}}:{{value}}</p>
+    <p v-for="(item , index) in arr">
+      数组arr
+      下标：{{index}}
+      内容 <span v-for="(value , key) in item">{{key}} : {{value}} <br></span>
+    </p>
+  </div>
+  <script>
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        message:'111',
+        list:[1,2,3,4,5,6],
+        obj:{
+          name:'hh',
+          age:12,
+        },
+        isOk:false,
+        arr:[
+          {
+            name:'gg',
+            age:11,
+          },
+          {
+            name:'yy',
+            age:12,
+          }
+        ]
+      }
+    })
+  </script>
+  
+</body>
+</html>

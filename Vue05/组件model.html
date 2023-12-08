@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    input {
+      padding: 2px 10px;
+      margin: 20px 0;
+      outline: none;
+    }
+
+    .parent {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid red;
+    }
+
+    .child {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid green;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <parent></parent>
+  </div>
+  <!-- v-bind 用ke..-case -->
+  <!-- 父级组件 -->
+  <template id="parent">
+    <div :class="{parent:true}">
+      <h1>{{name}}</h1>
+      <input type="text" v-model="message">
+      <p>父组件的message：{{message}}</p>
+      <p>子组件发送的message：{{childMessage}}</p>
+      <child :parent-message="message" @getmessage="get"></child>
+    </div>
+  </template>
+  <!-- 子级组件 -->
+  <template id="child1">
+    <div :class="{child:true}">
+      <h1>{{name}}</h1>
+      <input type="text" v-model="message" @input="$emit('getmessage' , message)">
+      <p>子组件的message：{{message}}</p>
+      <p>父组件发送的message：{{parentMessage}}</p>
+    </div>
+  </template>
+  <!-- 孙子级组件 -->
+  <template id="grandchild1">
+
+  </template>
+  <script>
+    const child = Vue.extend({
+      template: '#child1',
+      props:{
+        parentMessage:{
+          type:String,
+          required:true,
+        }
+      },
+      data() {
+        return {
+          name: '',
+          message: '',
+        }
+      },
+    })
+    const parent = Vue.extend({
+      template: '#parent',
+      data() {
+        return {
+          name: '',
+          message: '',
+          childMessage:''
+        }
+      },
+      components:{
+        child
+      },
+      methods:{
+        get(val){
+          this.childMessage = val
+        }
+      }
+    })
+    const vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+        }
+      },
+      methods: {
+      },
+      components: {
+        parent
+      }
+    })
+  </script>
+</body>
+
+</html>

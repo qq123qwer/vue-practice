@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <first :one="message"></first>
+  </div>
+  <script>
+    const city = Vue.extend({
+      template:`
+      <div>
+        <h3>城市：{{city}}</h3>
+      </div>
+      `,
+      props:{
+        three:{
+          type:String,
+          required:true,
+        }
+      },
+      data(){
+        return {
+          city:'03',
+        }
+      }
+    })
+    const province = Vue.extend({
+      template:`
+      <div>
+        <h2>省份：{{province}}</h2>
+        <city :three="two"></city>
+      </div>
+      `,
+      props:{
+        two:{
+          type:String,
+          required:true,
+        }
+      },
+      data(){
+        return {
+          province:'01'
+        }
+      },
+      components:{
+        city
+      }
+    })
+    const first = Vue.extend({
+      template:`
+      <div>
+        <h1>{{country}}</h1>
+        <province :two="one"></province>
+      </div>
+      `,
+      props:{
+        one:{
+          type:String,
+          required:true,
+        }
+      },
+      data(){
+        return {
+          country:'China',
+        }
+      },
+      components:{
+        province
+      }
+    })
+    const vm = new Vue({
+      el:"#app",
+      data(){
+        return {
+          message:'000',
+        }
+      },
+      components:{
+        first,
+      }
+    })
+  </script>
+  
+</body>
+</html>

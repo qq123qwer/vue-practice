@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{message}}
+    {{message | padleft}}
+    {{obj}}
+  </div>
+  <script>
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        message:1,
+        obj:{
+          val:'gg',
+        }
+      },
+      methods:{
+
+      },
+      watch:{
+        // message(newval , val){
+        //   console.log('当前值：'+newval , '之前值：'+val)
+        // }
+        'obj.val':{
+          handler(newval , val){
+            console.log('当前值：'+newval , '之前值：'+val)
+          },
+          immediate:true,
+          deep:true,
+        }
+      },
+      filters:{
+        padleft(val){
+          return String(val)[1] && String(val) || '0'+val
+        },
+      },
+    })
+  </script>
+</body>
+</html>

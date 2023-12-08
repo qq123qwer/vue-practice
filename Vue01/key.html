@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <input type="checkbox" v-model="checked" id="checkbox">
+    <label for="checkbox">{{checked}}</label> -->
+    <!-- <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <br>
+    <span>Checked names: {{ checkedNames }}</span> -->
+    <!-- <input type="radio" v-model="checkedSelect" id="One" value="One">
+    <label for="One">One</label>
+    <input type="radio" v-model="checkedSelect" id="Two" value="Two">
+    <label for="Two">Two</label>
+    <span>checkedSelect</span>
+    {{checkedSelect}} -->
+    <!-- <select v-model="selected">
+      <option disabled value="请选择">请选择</option>
+      <option>A</option>
+      <option>B</option>
+    </select>
+    {{selected}} -->
+    <!-- <select v-model="selectedArr" multiple>
+      <option disabled value="请选择">请选择</option>
+      <option>A</option>
+      <option>B</option>
+    </select>
+    {{selectedArr}} -->
+    <!-- 用key管理可复用元素 -->
+    <!--  复用已有元素而不是从头开始渲染-->
+    <template v-if="login === 'username'" >
+      <label>Username</label>
+      <input placeholder="Enter your username" :key="username-input">
+    </template>
+    <template v-else >
+      <label id="email">Email</label>
+      <input placeholder="Enter your email address" :key="email-input">
+    </template>
+    <button @click="login01()">登录</button>
+  </div>
+    <script>
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          message: '',
+          checked: true,
+          checkedNames:[],
+          checkedSelect:'',
+          selected:'',
+          selectedArr:[],
+          login:'username',
+        },
+        methods:{
+          login01(){
+            console.log('111')
+            if(this.login === 'username'){
+              console.log(this.login)
+              this.login = 'email'
+              console.log(this.login)
+              return
+            }
+            this.login = 'username'
+            return
+          }
+        }
+      })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+   <first :one="message"></first>
+  </div>
+  <template id="first">
+    <div>
+      <h1>{{ country }}</h1>
+      <province :two="one"></province>
+    </div>
+  </template>
+  <template id="second">
+    <div>
+      <h2>{{province}}</h2>
+    </div>
+  </template>
+  <script>
+    const province= Vue.extend({
+      template:'#second',
+      props:{
+        two:{
+          type:String,
+          required:true,
+        }
+      },
+      data(){
+        return {
+          province:'001',
+          twonumber:this.two
+        }
+      }
+    })
+    const first = Vue.extend({
+      template: '#first',
+      props:{
+        one:{
+          type:String,
+          required:true,
+        }
+      },
+      data(){
+        return {
+          country:'01',
+          onenumber :this.one
+        }
+      },
+      components:{
+        province
+      }
+    })
+    const vm = new Vue({
+      el:"#app",
+      data(){
+        return {
+          message:'123',
+        }
+      },
+      components:{
+        first
+      }
+    })
+  </script>
+</body>
+</html>

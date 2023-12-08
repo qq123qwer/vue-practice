@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class与Style绑定</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* display */
+    /* 
+    带有 v-show 的元素始终会被渲染并保留在 DOM 中。
+    v-show 只是简单地切换元素的 CSS property display。
+    v-if决定是否渲染
+    */
+    .box {
+      width: 100px;
+      height: 100px;
+      margin: 100px;
+      border: 1px solid blue;
+    }
+
+    .text {
+      color: #fff;
+      text-align: center;
+    }
+
+    .bgc {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div :class="[box,{text:isok} , {bgc:isok}]">
+      {{message}}
+    </div>
+    <div :class="classobject">
+      {{message2}}
+    </div>
+    <div :class="box">
+      {{message3}}
+    </div>
+    <div :class="isok ? box:''">
+      {{message3}}
+    </div>
+    <div :style="[{width : '100px'} , {height:10+'px'} , {margin:100+'px'} , border] ">
+      {{message}}
+    </div>
+    <div :style="styleobject">
+      {{message}}
+    </div>
+    <div :style="{color:red}">
+      {{message}}
+    </div>
+    <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">
+      {{message}}
+    </div>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: {
+        red:'red',
+        message: '123',
+        message2: '456',
+        message3: '789',
+        isok: true,
+        classobject: {
+          box: true,
+          text: true,
+          bgc: true,
+        },
+        box: {
+          box: true
+        },
+        styleobject:{
+          width:300+'px',
+          height:'300px',
+          backgroundColor:'blue',
+          color:'white',
+          textAlign:'center'
+        },
+        border:{
+          border:'1px solid green'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

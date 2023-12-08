@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单输入绑定</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!--lazy修饰符，在change事件发生后进行绑定 -->
+    <input type="text" v-model.lazy="message">单行文本{{message}}
+    <br>
+    <span>多行文本{{message1}}</span>
+    <textarea v-model="message1"></textarea>
+    <br>
+    复选框
+    <input type="checkbox" v-model="checked" id="checkbox">
+    <lable for="checkbox">{{checked}}</lable>
+    <br>
+    多个复选框
+    <input type="checkbox" v-model="checkedNames" id="checkbox1" value="01">
+    <lable for="checkbox1">01</lable>
+    <input type="checkbox" v-model="checkedNames" id="checkbox2" value="02">
+    <lable for="checkbox2">02</lable>
+    <input type="checkbox" v-model="checkedNames" id="checkbox3" value="03">
+    <lable for="checkbox3">03</lable>
+    <input type="checkbox" v-model="checkedNames" id="checkbox4" value="04">
+    <lable for="checkbox4">04</lable>
+    {{checkedNames}}
+    <br>
+    单选按钮
+    <input type="radio" id="one" value="one" id="one" v-model="pick">
+    <label for="one">one</label>
+    <input type="radio" id="two" value="two" id="two" v-model="pick">
+    <label for="two">two</label>
+    {{pick}}
+    <br>
+    <select v-model="select">
+      <option disabled>--请选择--</option>
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+    {{select}}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <select multiple v-model="selected">
+      <option disabled>--请选择--</option>
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+    {{selected}}
+    <hr>
+    <select v-model="selecteds">
+      <option v-for="option in options" :value="option.value">
+        {{option.txt}}
+      </option>
+    </select>
+    {{selecteds}}
+  </div>
+  <script>
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        message:'123',
+        message1:'456',
+        checked:false,
+        checkedNames:['01' , '04'],
+        pick:'one',
+        select:'A',
+        selected:['A' , 'C'],
+        selecteds:'A',
+        options:[
+          {txt:'one' , value:'A'},
+          {txt:'two' , value:'B'},
+          {txt:'three' , value:'C'},
+        ]
+      },
+      methods:{
+
+      },
+      computed:{
+
+      },
+      watch:{
+
+      },
+      filters:{
+
+      }
+    })
+  </script>
+</body>
+</html>

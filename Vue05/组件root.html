@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    input {
+      padding: 2px 10px;
+      margin: 20px 0;
+      outline: none;
+    }
+
+    .parent {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid red;
+    }
+
+    .child {
+      margin: 100px;
+      padding: 10px;
+      width: 400px;
+      height: 400px;
+      border: 10px solid green;
+    }
+    .grandson{
+      padding: 10px;
+      width: 200px;
+      height: 200px;
+      border: 10px solid green;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <parent></parent>
+  </div>
+  <template id="parent">
+    <div :class="{parent:true}">
+      <h1>父级</h1>
+      <p>{{grandson}}</p>
+      <button @click="get">按钮</button>
+      <input  type="text" v-model="message">
+      <child ref="one"></child>
+      <child ref="two"></child>
+    </div>
+  </template>
+  <template id="child">
+    <div :class="{child:true}">
+      <h1>子级</h1>
+      {{message}}
+      <grandson></grandson>
+    </div>
+  </template>
+  <template id="grandson">
+    <div :class="{grandson:true}">
+      <h1>孙子级</h1>
+      <button @click="get()">拿到</button>
+      <p>{{gmsg}}</p>
+      <button @click="set()">设置</button>
+    </div>
+  </template>
+  <script>
+    const grandson = {
+      template:"#grandson",
+      data(){
+        return {
+          gmsg:'',
+        }
+      },
+      methods:{
+        get(){
+          this.gmsg = this.$parent.message
+        },
+        set(){
+          console.log(this.$root)
+          console.dir(this.$root.message)
+        }
+      }
+    }
+    const child = {
+      template:"#child",
+      data(){
+        return {
+          message:'111',
+        }
+      },
+      components:{
+        grandson,
+      }
+    }
+    const parent = {
+      template:"#parent",
+      components:{
+        child
+      },
+      data(){
+        return {
+          message:'one',
+          grandson:'',
+        }
+      },
+      methods:{
+        get(){
+          this.$refs[this.message].message = this.message
+        }
+      }
+    }
+    const vm = new Vue({
+      el:"#app",
+      components:{
+        parent
+      },
+      data(){
+        return {
+          message:'root'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    {{ message.split('').reverse().join('-') }}
+    <!-- 调用一次，有缓存 -->
+    <p>调用computed方法反转字符串：{{reversed}}</p>
+    <p>调用computed方法反转字符串：{{reversed}}</p>
+    <p>调用computed方法反转字符串：{{reversed}}</p>
+    <p>调用computed方法反转字符串：{{reversed}}</p>
+    <p>调用computed方法反转字符串：{{reversed}}</p>
+    <!-- 调用多次 -->
+    <p>调用methods下面的方法反转字符串：{{reverse()}}</p>
+    <p>调用methods下面的方法反转字符串：{{reverse()}}</p>
+    <p>调用methods下面的方法反转字符串：{{reverse()}}</p>
+    <p>调用methods下面的方法反转字符串：{{reverse()}}</p>
+    <p>调用methods下面的方法反转字符串：{{reverse()}}</p>
+
+    <p>{{add}}</p>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data: function () {
+        return {
+          message: 'HELLO',
+          first: 1,
+          second: 2,
+        }
+      },
+      methods: {
+        reverse: function () {
+          return this.message.split('').reverse().join('-')
+        }
+      },
+      computed: {
+        reversed() {
+          return this.message.split('').reverse().join('-')
+        },
+        add: function () {
+          return this.first + this.second
+        },
+        add02: {
+          get: function () {
+            return this.first + this.second
+          },
+          set: function (newvalue) {
+            console.log('this.first' + this.first)
+            this.first = newvalue
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

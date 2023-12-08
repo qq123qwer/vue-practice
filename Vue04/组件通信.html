@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      user-select: none;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <parent :obj="object" @myreceive="receive"></parent>
+  </div>
+
+  <template id="parent">
+    <div>
+      <ul>
+        <li v-for="(item , index) in obj">
+          内容：{{item.content}} 数量：{{item.num}}
+          <child @myreceive="$emit('myreceive' , index ,  arguments)"></child>
+        </li>
+      </ul>
+    </div>
+
+  </template>
+  <!-- 按钮 -->
+  <template id="child">
+    <div>
+      <button @click="$emit('myreceive' , 1)">数量+1</button>
+      <button @click="$emit('myreceive' , -1)">数量-1</button>
+    </div>
+  </template>
+
+  <script>
+    const child = Vue.extend({
+      template: '#child',
+      props: {
+
+      },
+      data() {
+        return {
+
+        }
+      },
+      methods: {
+      }
+    })
+
+    const parent = Vue.extend({
+      template: '#parent',
+      props: {
+        obj: {
+          type: Array
+        }
+      },
+      data() {
+        return {
+
+
+        }
+      },
+      methods: {
+        // transform(){
+        //   this.$emit('myreceive')
+        // }
+      },
+      components: {
+        child
+      }
+    })
+
+    const vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          object: [
+            {
+              content: '可乐',
+              num: 0,
+            },
+            {
+              content: '雪碧',
+              num: 0,
+            },
+            {
+              content: '芬达',
+              num: 0,
+            },
+            {
+              content: '脉动',
+              num: 0,
+            },
+          ]
+        }
+      },
+      components: {
+        parent
+      },
+      methods: {
+        // addnum(index) {
+        //   this.object[index].num++
+        // },
+        // decreasenum(index) {
+        //   this.object[index].num--
+        // },
+        receive(index,$event) {
+          this.object[index].num +=$event[0]
+          if(this.object[index].num <= 0){
+            this.object[index].num = 0
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <parent :num="message"></parent>
+  </div>
+  <script>
+    const child = Vue.extend({
+      template: '<p>{{name}}+{{age}} </p>',
+      data() {
+        return {
+          name: 'gg',
+          age: 11,
+        }
+      }
+    })
+    const parent = Vue.extend({
+      props: {
+        num: {
+          type: Number,
+          default: 23,// 默认值
+          required: true,// 必填
+          //验证
+          validate(val) {
+            return /^\d+$/.test(val)
+          }
+        }
+      },
+      template: '<div>{{num}}{{name}}+{{age}}<child></child></div>',
+      data() {
+        return {
+          name: 'tt',
+          age: 22,
+        }
+      },
+      components: {
+        child
+      }
+    })
+    const vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          message: 11,
+        }
+      },
+      components: {
+        parent,
+        child
+      }
+    })
+
+  </script>
+</body>
+
+</html>
